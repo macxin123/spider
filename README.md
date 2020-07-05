@@ -1,2 +1,19 @@
 # spider
-这是一些普通的爬虫程序 
+
+    这是一些普通的爬虫程序，仅供学习参考。 
+
+## requirements.txt文件
+
+    存放着项目中正在使用或即将使用的依赖库。可使用下述代码安装：
+
+    pip install -r 项目目录/requirements.txt -i http://pypi.douban.com/simple --trusted-host pypi.douban.com
+
+
+## jianshu文件夹
+
+- re_jianshu.py
+
+    使用了re模块提取简书接口的部分数据
+- redis_jianshu.py
+
+    使用lxml模块进行页面解析，并使用了redis进行了去重操作
