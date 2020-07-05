@@ -23,7 +23,7 @@ def show_data(title_and_link):
     :param title_and_link: 数据
     :return: None
     """
-    # 重新声明num, judge
+    # 重新声明num
     global num
 
     for i in title_and_link:
@@ -31,7 +31,7 @@ def show_data(title_and_link):
         print(f'{num}:https://www.jianshu.com{i.group(1).strip()}', end=' ')
         print(i.group(2).strip())
         num += 1
-        if num > 10:
+        if num > 1000:
             print('完成任务！！！')
             break
 
@@ -58,20 +58,23 @@ def main():
         'https': 'http://54.241.121.74:3128',
     }
 
+    # 初始页码
+    i = 0
+
     # 循环请求页面
     for i in range(10):
         response = requests.get(
             url=url.format(i),
             headers=headers,
-            # proxies=proxies
+            proxies=proxies
         )
         # 解析页面
         title_and_link = get_data(response.text)
         # 展示数据
         show_data(title_and_link)
 
-        # 如果judge为True，代表已经爬取了1000条数据
-        if num > 10:
+        # num>1000，代表已经爬取了1000条数据
+        if num > 1000:
             break
 
 
