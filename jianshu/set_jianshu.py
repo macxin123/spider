@@ -1,39 +1,32 @@
-import re
 import requests
 import fake_useragent
+from lxml import etree
 
 
-def get_data(text):
+def parse_and_show(tree):
     """
-    提取页面源码中的信息
-    :param text: 页面源代码
-    :return: result
-    """
-    # 生成正则对象
-    pattern = re.compile(r'<a class="title" target="_blank" href="(.*?)">(.*?)</a>', re.S)
-    # 查找符合上一行正则对象的数据
-    result = pattern.finditer(text)
-
-    return result
-
-
-def show_data(title_and_link):
-    """
-    展示数据
-    :param title_and_link: 数据
+    解析页面
+    :param tree: xpath对象
     :return: None
     """
-    # 重新声明num
     global num
 
-    for i in title_and_link:
-        # 打印数据
-        print(f'{num}:https://www.jianshu.com{i.group(1).strip()}', end=' ')
-        print(i.group(2).strip())
-        num += 1
-        if num > 1000:
-            print('完成任务！！！')
-            break
+    title = tree.xpath('//div[@id="list-container"]/ul/li/div[@class="content"]/a[@class="title"]/text()')
+    href = tree.xpath('//div[@id="list-container"]/ul/li/div[@class="content"]/a[@class="title"]/@href')
+    link = ['https://www.jianshu.com' + i for i in href]
+    # 将链接与标题打包为元组
+    link_and_title = zip(link, title)
+    for i in link_and_title:
+        # 计算当前集合中的数据数量
+        count = len(house)
+        # 向集合中添加数据
+        house.add(i)
+        # 有新的数据添加到集合中
+        if len(house) > count:
+            print(f'{num}:{i}')
+            num += 1
+            if num > 1000:
+                break
 
 
 def main():
@@ -68,19 +61,21 @@ def main():
             headers=headers,
             proxies=proxies
         )
-
         page += 1
 
-        # 解析页面
-        title_and_link = get_data(response.text)
-        # 展示数据
-        show_data(title_and_link)
+        # 将html转化为可用xpath解析的对象
+        tree = etree.HTML(response.text)
+        # 解析并展示数据
+        parse_and_show(tree)
 
-        # num>1000，代表已经爬取了1000条数据
+        # house长度大于1000，代表已经爬取了1000条数据
         if num > 1000:
             break
 
+    print('完成任务！')
+
 
 if __name__ == '__main__':
+    house = set()
     num = 1
     main()
