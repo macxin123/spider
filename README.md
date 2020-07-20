@@ -17,3 +17,9 @@
 - redis_jianshu.py
 
     使用lxml模块进行页面解析，并使用了redis进行了去重操作
+- set_jianshu.py
+
+    使用了set集合对url进行去重
+- threaning_jianshu.py
+
+   基于生产者消费者模式的多线程爬虫 
