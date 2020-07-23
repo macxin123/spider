@@ -11,6 +11,8 @@
 
 ## jianshu文件夹
 
+jianshu网站的爬虫
+
 - re_jianshu.py
 
     使用了re模块提取简书接口的部分数据
@@ -23,3 +25,7 @@
 - threaning_jianshu.py
 
    基于生产者消费者模式的多线程爬虫 
+
+## anjvke文件夹
+
+anjvke网站的租房信息爬虫，使用了scrapy框架，并对页面的base64加密进行了破解，最后将取得的房源信息保存到MongoDB中
