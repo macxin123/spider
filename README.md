@@ -29,3 +29,9 @@ jianshu网站的爬虫
 ## anjvke文件夹
 
 anjvke网站的租房信息爬虫，使用了scrapy框架，并对页面的base64加密进行了破解，最后将取得的房源信息保存到MongoDB中
+
+## zhangshang_lol文件夹
+
+- zhangshang_lol.py
+
+    对 掌上lol APP 进行关注新闻的爬取，使用了Charles进行接口排查，将数据保存至MongoDB，使用了threading进行多线程性能优化
